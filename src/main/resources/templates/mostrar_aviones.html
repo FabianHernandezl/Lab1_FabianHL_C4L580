@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Aeronaves por Tipo</title>
+    <style>
+        /* Selector para el cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f6f8;
+        }
+        /* Selector para encabezados de nivel 1 */
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        /* Selector para tablas */
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #ffffff;
+        }
+        /* Selector para celdas de encabezado */
+        .tabla th {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px;
+            text-align: left;
+        }
+        /* Selector para celdas de datos */
+        .tabla td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        /* Selector para filas pares */
+        .fila-par {
+            background-color: #f9f9f9;
+        }
+        /* Selector para filas impares */
+        .fila-impar {
+            background-color: #e8f4fc;
+        }
+        /* Selector para botón de regresar */
+        .btn-regresar {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 8px 16px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        /* Selector hover para botón regresar */
+        .btn-regresar:hover {
+            background-color: #219150;
+        }
+        /* Selector para mensaje de tabla vacía */
+        .mensaje-vacio {
+            padding: 20px;
+            background-color: #fdecea;
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Tipo de Avión:
+        <span th:if="${tipoSeleccionado != null}"
+              th:text="${tipoSeleccionado.code}">-</span>
+        <span th:unless="${tipoSeleccionado != null}">No seleccionado</span>
+    </h1>
+
+    <!-- Enlace para regresar a realizar otra consulta -->
+    <a th:href="@{/}" class="btn-regresar">Otra Consulta</a>
+
+    <!-- Validación vacía: mensaje si no hay aeronaves -->
+    <div th:if="${#lists.isEmpty(aviones)}" class="mensaje-vacio">
+        El tipo de avión seleccionado no tiene aeronaves asociadas
+    </div>
+
+    <!-- Tabla solo si hay aeronaves -->
+    <table class="tabla" th:unless="${#lists.isEmpty(aviones)}">
+        <thead>
+            <tr>
+                <th>ID Aeronave</th>
+                <th>Capacidad de Pasajeros</th>
+                <th>Nombre de la Aerolínea</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="avion, iter : ${aviones}"
+                th:classappend="${iter.index % 2 == 0} ? 'fila-par' : 'fila-impar'">
+                <td th:text="${avion.id}">0</td>
+                <td th:text="${avion.capacity}">0</td>
+                <td th:text="${avion.airline.name}">Aerolínea</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

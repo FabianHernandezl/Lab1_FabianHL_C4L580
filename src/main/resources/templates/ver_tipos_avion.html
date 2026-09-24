@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tipos de Avión</title>
+    <style>
+        /* Selector para el cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f6f8;
+        }
+        /* Selector para encabezados de nivel 1 */
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        /* Selector para tablas */
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #ffffff;
+        }
+        /* Selector para celdas de encabezado */
+        .tabla th {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px;
+            text-align: left;
+        }
+        /* Selector para celdas de datos */
+        .tabla td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        /* Selector para enlaces dentro de la tabla */
+        .tabla a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        /* Selector hover para enlaces de tabla */
+        .tabla a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tipos de Avión</h1>
+
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Código Tipo</th>
+                <th>Identificador</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="tipo : ${tipos}">
+                <td>
+                    <!-- Enlace dinámico: envía el id del tipo al controlador -->
+                    <a th:href="@{/buscar(idTipo=${tipo.id})}"
+                       th:text="${tipo.code}">Identificador</a>
+                </td>
+                <td th:text="${tipo.id}">0</td>
+                <td th:text="${tipo.description}">Descripción</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
